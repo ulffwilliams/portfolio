@@ -4,15 +4,14 @@
 @import "../components/Dither.css";
 
 @font-face {
-  font-family: "Montserrat";
+  font-family: "ELEGANT TYPEWRITER";
   src:
-    local("Montserrat"),
-    url(@/public/fonts/Montserrat-VariableFont_wght.ttf)
-      format("truetype-variations");
+    local("ELEGANT TYPEWRITER"),
+    url("/public/fonts/ELEGANT_TYPEWRITER_REGULAR.TTF") format("truetype");
 }
 
 :root {
-  font-family: "Montserrat", sans-serif;
+  font-family: "ELEGANT TYPEWRITER", sans-serif;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
