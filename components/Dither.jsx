@@ -6,7 +6,6 @@ import { EffectComposer, wrapEffect } from "@react-three/postprocessing";
 import { Effect } from "postprocessing";
 import * as THREE from "three";
 
-
 const waveVertexShader = `
 precision highp float;
 varying vec2 vUv;
@@ -271,7 +270,8 @@ export default function Dither({
   waveSpeed = 0.05,
   waveFrequency = 3,
   waveAmplitude = 0.3,
-  waveColor = [0.5, 0.5, 0.5],
+  /* HÄR */
+  waveColor = [0.3, 0.2, 0.1],
   colorNum = 4,
   pixelSize = 2,
   disableAnimation = false,

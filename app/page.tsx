@@ -1,15 +1,15 @@
 import Dither from "../components/Dither";
+import Name from "@/components/Name";
 
 export default function Home() {
   return (
-    <>
-      <Dither />
-      <div className="flex min-h-screen items-center justify-center">
-        <h1 className="text-7xl text-white">
-          <span id="i-blink">|</span>
-          <span>William Ulff</span>
-        </h1>
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <Dither />
       </div>
-    </>
+      <div className="relative z-10 flex items-center justify-center w-full">
+        <Name />
+      </div>
+    </div>
   );
 }
