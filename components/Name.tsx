@@ -1,4 +1,5 @@
-import "@/components/Name.css";
+import "../components/Name.css";
+
 
 export default function Name() {
   return (
@@ -7,7 +8,7 @@ export default function Name() {
         <span id="i-blink" className="text-7xl text-(--off-white)">
           |
         </span>
-        <span className="text-7xl text-(--off-white) mt-3"> William Ulff</span>
+        <span className="text-7xl text-(--off-white)"> William Ulff</span>
       </div>
     </>
   );

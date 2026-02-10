@@ -1,15 +1,23 @@
-import Dither from "../components/Dither";
-import Name from "@/components/Name";
+import Name from "../components/Name";
+import ClickSpark from "../components/ClickSpark";
+import Buttons from "@/components/Buttons";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <Dither />
+    <ClickSpark
+      sparkColor="#fff"
+      sparkSize={10}
+      sparkRadius={15}
+      sparkCount={8}
+      duration={400}
+    >
+      <div className="relative min-h-screen w-full h-full flex items-center justify-center overflow-hidden bg-red-400">
+        {/*         <div className="flex items-center justify-center flex-col gap-5 w-full">
+          <Name />
+          <Buttons />
+        </div> */}
+        <h1>Ingenting här =)</h1>
       </div>
-      <div className="relative z-10 flex items-center justify-center w-full">
-        <Name />
-      </div>
-    </div>
+    </ClickSpark>
   );
 }
