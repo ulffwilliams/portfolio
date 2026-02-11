@@ -12,11 +12,10 @@ export default function Home() {
       duration={400}
     >
       <div className="relative min-h-screen w-full h-full flex items-center justify-center overflow-hidden bg-red-400">
-        {/*         <div className="flex items-center justify-center flex-col gap-5 w-full">
+        <div className="flex items-center justify-center flex-col gap-5 w-full">
           <Name />
           <Buttons />
-        </div> */}
-        <h1>Ingenting här =)</h1>
+        </div>
       </div>
     </ClickSpark>
   );

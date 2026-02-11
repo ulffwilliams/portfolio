@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-
-
 export const metadata: Metadata = {
   title: " Ulff Williams - Portfolio",
   description:
@@ -16,11 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={` antialiased`}
-      >
-        {children}
-      </body>
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <body className={` antialiased`}>{children}</body>
     </html>
   );
 }

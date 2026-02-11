@@ -2,23 +2,52 @@
 import { Button } from "../components/ui/button";
 import { useState, Activity } from "react";
 import About from "./About";
+import Contact from "./Contact";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import "@/components/TechList.css";
 
 export default function Buttons() {
-  const [show, setShow] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [showContact, setShowContact] = useState(false);
   return (
     <div id="btns" className="flex gap-5">
       <Button
         onClick={() => {
-          setShow((v) => !v);
+          setShowAbout((v) => !v);
         }}
-        className="about-anchor"
       >
         About me
       </Button>
-      <Button>Things i've done</Button>
-      <Button>Contact</Button>
-      <Activity mode={show ? "visible" : "hidden"}>
-        <About />
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button className="hover:bg-gray-400">Things i've done</Button>
+          </TooltipTrigger>
+          <TooltipContent className="bg-gray-400">
+            Under maintenance..
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <Button
+        onClick={() => {
+          setShowContact((v) => !v);
+        }}
+      >
+        Contact
+      </Button>
+      <Activity mode={showAbout ? "visible" : "hidden"}>
+        <About closeAbout={() => setShowAbout(false)} />
+      </Activity>
+
+      <Activity mode={showContact ? "visible" : "hidden"}>
+        <Contact closeContact={() => setShowContact(false)} />
       </Activity>
     </div>
   );
