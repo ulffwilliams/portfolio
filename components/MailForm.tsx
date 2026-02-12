@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Activity } from "react";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,6 +8,7 @@ export default function MailForm() {
   const [mailSent, setMailSent] = React.useState(false);
   const [formError, setFormError] = React.useState("");
   const [invalidField, setInvalidField] = React.useState<string | null>(null);
+  const sound = new Audio("/email-sent.mp3");
 
   async function onSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -59,6 +61,12 @@ export default function MailForm() {
 
     if (response.ok) {
       setMailSent(true);
+      form.reset();
+      try {
+        await sound.play();
+      } catch (e) {
+        console.error("Failed to play sound:", e);
+      }
       setTimeout(() => {
         setMailSent(false);
       }, 5000);
@@ -102,7 +110,7 @@ export default function MailForm() {
             <p className="text-xs text-red-400">{formError}</p>
           </form>
           <br />
-          <p>
+          <p className="font-normal">
             ..or mail me directly at{" "}
             <a
               className="underline hover:text-(--main)"

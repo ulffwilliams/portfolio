@@ -1,4 +1,7 @@
-Något portfolio-liknande! In progress
+Something something portfolioesque
 
-För att köra:
+Run it:
+npm install
 npm run dev
+
+**.env sold separately**
