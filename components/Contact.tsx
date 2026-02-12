@@ -20,8 +20,6 @@ export default function Contact({ closeContact }: ContactProps) {
         >
           X
         </Button>
-        <h1>Want to get in touch? Great.</h1>
-        <p>Type your errand below and I'll get back to you!</p>
         <MailForm />
       </div>
     </Card>
