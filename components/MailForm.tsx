@@ -72,7 +72,6 @@ export default function MailForm() {
       <Activity mode={!mailSent ? "visible" : "hidden"}>
         <div id="form-container" className="flex flex-col gap-2">
           <h1>Want to get in touch? Great.</h1>
-          <p>Type your errand below and I'll get back to you!</p>
           <form onSubmit={onSubmit} className="flex flex-col gap-2">
             <label htmlFor="name">Name: </label>
             <Input
