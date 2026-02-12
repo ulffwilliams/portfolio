@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: " Ulff Williams - Portfolio",
@@ -17,7 +18,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={` antialiased`}>{children}</body>
+      <body className={` antialiased`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
