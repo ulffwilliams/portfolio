@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
       <br/>
       <h2>Nytt meddelande från ${data.get("name")}</h2>
       <br />
-      <p><strong>Email:</strong> ${data.get("E-mail")}</p>
+      <p><strong>Email:</strong> ${data.get("email")}</p>
       <br />
       <p><strong>Message:</strong> ${data.get("message")}</p>
       `,
