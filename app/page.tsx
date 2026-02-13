@@ -1,6 +1,7 @@
 import Name from "../components/Name";
 import ClickSpark from "../components/ClickSpark";
 import Buttons from "@/components/Buttons";
+import Socials from "@/components/Socials";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <div className="flex items-center justify-center flex-col gap-5 w-full">
           <Name />
           <Buttons />
+          <Socials />
         </div>
       </div>
     </ClickSpark>
