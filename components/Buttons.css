@@ -15,10 +15,12 @@
   40% {
     -webkit-transform: translate(-2px, -2px);
     transform: translate(-2px, -2px);
+    background-color: rgb(228, 94, 94);
   }
   60% {
     -webkit-transform: translate(2px, 2px);
     transform: translate(2px, 2px);
+    background-color: rgb(228, 94, 94);
   }
   80% {
     -webkit-transform: translate(2px, -2px);
@@ -41,10 +43,12 @@
   40% {
     -webkit-transform: translate(-2px, -2px);
     transform: translate(-2px, -2px);
+    background-color: rgb(228, 94, 94);
   }
   60% {
     -webkit-transform: translate(2px, 2px);
     transform: translate(2px, 2px);
+    background-color: rgb(228, 94, 94);
   }
   80% {
     -webkit-transform: translate(2px, -2px);

@@ -28,3 +28,15 @@
     opacity: 1;
   }
 }
+
+#contact-card {
+  width: auto;
+  top: 20%;
+}
+
+@media (min-width: 1024px) {
+  #contact-card {
+    bottom: 50;
+    right: 40;
+  }
+}

@@ -4,6 +4,7 @@ import TechList from "./TechList";
 import "@/app/globals.css";
 import "@/components/About.css";
 import { Button } from "./ui/button";
+import TextType from "./TextType";
 
 type AboutProps = {
   closeAbout: () => void;
@@ -11,7 +12,10 @@ type AboutProps = {
 
 export default function About({ closeAbout }: AboutProps) {
   return (
-    <Card className="w-full max-w-sm absolute scale-in-center bottom-20 left-20">
+    <Card
+      className="w-full h-100 max-w-sm absolute scale-in-center"
+      id="about-card"
+    >
       <div id="card-content" className="m-5 flex flex-col gap-5">
         <Button
           className="w-1 absolute top-1 right-2 bg-yellow-100"

@@ -105,7 +105,7 @@ export default function MailForm() {
               type="submit"
               className="bg-black w-20 text-white rounded-sm font-normal hover:bg-gray-700 transition-colors"
             >
-              Submit
+              Send
             </button>
             <p className="text-xs text-red-400">{formError}</p>
           </form>
@@ -123,7 +123,7 @@ export default function MailForm() {
         </div>
       </Activity>
       <Activity mode={mailSent ? "visible" : "hidden"}>
-        <h1>Message sent!</h1>
+        <h1>Message sent! ✅</h1>
         <p>I'll get back to you as soon as I can :)</p>
       </Activity>
     </>

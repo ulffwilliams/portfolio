@@ -28,3 +28,14 @@
     opacity: 1;
   }
 }
+
+#about-card {
+  top: 30%;
+}
+
+@media (min-width: 1024px) {
+  #about-card {
+    bottom: 40;
+    left: 70;
+  }
+}

@@ -12,7 +12,10 @@ type ContactProps = {
 
 export default function Contact({ closeContact }: ContactProps) {
   return (
-    <Card className="w-full max-w-sm absolute scale-in-center bottom-50 right-40 bg-green-100">
+    <Card
+      className="w-full h-120 max-w-sm absolute scale-in-center bg-green-100"
+      id="contact-card"
+    >
       <div id="card-content" className="m-5 flex flex-col gap-5">
         <Button
           className="w-1 absolute top-1 right-2 bg-pink-200"
