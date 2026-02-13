@@ -4,4 +4,6 @@ Run it:
 npm install
 npm run dev
 
+ez
+
 **.env sold separately**
