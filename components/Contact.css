@@ -40,3 +40,10 @@
     right: 40;
   }
 }
+
+@media (orientation: landscape) and (max-width: 1024px) {
+  #contact-card {
+    top: 0;
+    max-height: 100%;
+  }
+}

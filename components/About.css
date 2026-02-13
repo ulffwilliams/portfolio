@@ -33,9 +33,15 @@
   top: 30%;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   #about-card {
     bottom: 40;
     left: 70;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1024px) {
+  #about-card {
+    top: 20;
   }
 }
