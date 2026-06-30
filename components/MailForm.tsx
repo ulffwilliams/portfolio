@@ -92,7 +92,7 @@ export default function MailForm() {
             <Input
               type="text"
               name="email"
-              placeholder="imsupercool@andveryhandsome.com"
+              placeholder="putyourmail@here.now"
               className={invalidField === "email" ? "border-red-400" : ""}
             />
             <label htmlFor="message">Message: </label>

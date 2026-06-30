@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import ClickSpark from "../components/ClickSpark";
 
 export const metadata: Metadata = {
   title: " Ulff Williams - Portfolio",
@@ -19,7 +20,15 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className={` antialiased`}>
-        {children}
+        <ClickSpark
+          sparkColor="#f54269"
+          sparkSize={10}
+          sparkRadius={15}
+          sparkCount={8}
+          duration={400}
+        >
+          {children}
+        </ClickSpark>
         <Analytics />
       </body>
     </html>
