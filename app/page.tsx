@@ -13,6 +13,7 @@ import ProjectLink from "@/components/ProjectLink";
 import RotatingWord from "@/components/RotatingWord";
 import Magnetic from "@/components/Magnetic";
 import ScrollReveal from "@/components/ScrollReveal";
+import IntroLoader from "@/components/IntroLoader";
 import { Color } from "three";
 
 export default function Home() {
@@ -22,9 +23,13 @@ export default function Home() {
   return (
     <SmoothWrapper>
       <ProjectModalProvider>
+        <IntroLoader />
         <ScrollReveal />
         <div className="flex justify-start flex-col bg-blue-50">
-          <nav className="w-full border-b-4 h-19 sticky top-0 z-50 flex justify-between items-center px-5 md:px-10 lg:px-16 anchor/nav-anchor bg-white">
+          <nav
+            data-intro
+            className="w-full border-b-4 h-19 sticky top-0 z-50 flex justify-between items-center px-5 md:px-10 lg:px-16 anchor/nav-anchor bg-white"
+          >
             <h2 className="text-xl">William Ulff</h2>
 
             {/* Desktop links */}
@@ -93,7 +98,10 @@ export default function Home() {
 
           <section className="flex items-center justify-center px-5 min-h-screen">
             <div className="w-full max-w-7xl flex flex-col items-start gap-8 border-b-4 pb-10 md:pb-20">
-              <p className="text-4xl md:text-7xl lg:text-8xl tracking-wide font-thin max-w-6xl md:leading-tight">
+              <p
+                data-intro
+                className="text-4xl md:text-7xl lg:text-8xl tracking-wide font-thin max-w-6xl md:leading-tight"
+              >
                 Hello. My name is William, I&apos;m a{" "}
                 <RotatingWord
                   words={[
@@ -117,7 +125,10 @@ export default function Home() {
                 />
                 . Nice to meet you!
               </p>
-              <div className="flex flex-col sm:flex-row gap-5 mt-4 text-lg md:text-xl">
+              <div
+                data-intro
+                className="flex flex-col sm:flex-row gap-5 mt-4 text-lg md:text-xl"
+              >
                 <Magnetic strength={0.3}>
                   <a
                     href="#work"
