@@ -103,3 +103,34 @@ a {
 .split-line {
   overflow: hidden;
 }
+
+/* ---- Printable CV ---- */
+.cv-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  /* Force backgrounds/colors to print (black header, accent rules) */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .cv-sheet {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    box-shadow: none !important;
+    border: none !important;
+    page-break-after: avoid;
+  }
+}

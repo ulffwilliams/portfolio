@@ -14,36 +14,6 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "coldsoup",
-    title: "Coldsoup",
-    blurb: " I use it every day with my various teams to stay structured.",
-    preview:
-      "A team messenger I built for internal use, that got way more sophisticated than I expected. I use it every day with my various teams to stay structured.",
-    description: [
-      "coldsoup - a team messenger i initially built for internal use with one idea: no DMs, no channels, just threads inside groups. Every thread has an OPEN / URGENT / DONE status, so the whole team can see what's handled and what's on fire without asking.",
-      "The status model. A thread isn't just a chat - it's a task with a state. You always know what's still open and what's done, without anyone chasing for updates.",
-      "Installs like an app. It's a PWA, so it lives on your home screen and opens like a native app. One codebase, works everywhere.",
-      "Deployed and live on Vercel and Supabase.",
-    ],
-    tags: [
-      "Next.js",
-      "TypeScript",
-      "Tailwind",
-      "Supabase",
-      "Vercel",
-      "React Native",
-      "Resend",
-    ],
-    images: ["/coldsoup-mocks/1.png"],
-    cover: "/coldsoup-mocks/1.png",
-    links: [
-      { label: "Live", href: "https://coldsoup.kallsup.se/" },
-      { label: "GitHub", href: "https://github.com/konceptaWilliam/coldsoup" },
-    ],
-    year: "2026 - now",
-    role: "System development/design",
-  },
-  {
     slug: "skoldatabasen",
     title: "Skoldatabasen",
     blurb: "",
@@ -106,6 +76,36 @@ export const projects: Project[] = [
     cover: "/bondgarden-mocks/bond1.png",
     links: [],
     year: "2024 — now",
+    role: "System development/design",
+  },
+  {
+    slug: "coldsoup",
+    title: "Coldsoup",
+    blurb: " I use it every day with my various teams to stay structured.",
+    preview:
+      "A team messenger I built for internal use, that got way more sophisticated than I expected. I use it every day with my various teams to stay structured.",
+    description: [
+      "coldsoup - a team messenger i initially built for internal use with one idea: no DMs, no channels, just threads inside groups. Every thread has an OPEN / URGENT / DONE status, so the whole team can see what's handled and what's on fire without asking.",
+      "The status model. A thread isn't just a chat - it's a task with a state. You always know what's still open and what's done, without anyone chasing for updates.",
+      "Installs like an app. It's a PWA, so it lives on your home screen and opens like a native app. One codebase, works everywhere.",
+      "Deployed and live on Vercel and Supabase.",
+    ],
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind",
+      "Supabase",
+      "Vercel",
+      "React Native",
+      "Resend",
+    ],
+    images: ["/coldsoup-mocks/1.png"],
+    cover: "/coldsoup-mocks/1.png",
+    links: [
+      { label: "Live", href: "https://coldsoup.kallsup.se/" },
+      { label: "GitHub", href: "https://github.com/konceptaWilliam/coldsoup" },
+    ],
+    year: "2026 - 2026",
     role: "System development/design",
   },
 ];
