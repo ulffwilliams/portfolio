@@ -33,7 +33,7 @@ export default function Home() {
             <h2 className="text-xl">William Ulff</h2>
 
             {/* Desktop links */}
-            <div className="hidden md:flex gap-8 lg:gap-12 font-bold text-l">
+            <div className="hidden md:flex gap-8 lg:gap-12 text-l">
               <Magnetic strength={0.5}>
                 <a href="#about" className="hover:underline">
                   about me
