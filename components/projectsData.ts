@@ -74,7 +74,7 @@ export const projects: Project[] = [
       "/bondgarden-mocks/bond5.png",
     ],
     cover: "/bondgarden-mocks/bond1.png",
-    links: [],
+    links: [{ label: "Live", href: "https://bondgarden.aktivskola.org/" }],
     year: "2024 — now",
     role: "System development/design",
   },
@@ -107,5 +107,26 @@ export const projects: Project[] = [
     ],
     year: "2026 - 2026",
     role: "System development/design",
+  },
+  {
+    slug: "kallsup",
+    title: "Kallsup",
+    blurb: "Site for the Swedish band Kallsup.",
+    preview:
+      "Site for the Swedish band Kallsup. Album pre-order, tour dates and merch.",
+    description: [
+      "kallsup.se - site for the Swedish band Kallsup. The layout follows whatever they're pushing at the time. Right now that's the pre-order for Alldeles för nära.",
+      "Next.js on Vercel with NeonDB for tour-dates",
+    ],
+    tags: ["Next.js", "TypeScript", "Tailwind", "GSAP", "Vercel"],
+    images: [
+      "/kallsup-mocks/1.png",
+      "/kallsup-mocks/2.png",
+      "/kallsup-mocks/3.png",
+    ],
+    cover: "/kallsup-mocks/1.png",
+    links: [{ label: "Live", href: "https://www.kallsup.se/" }],
+    year: "2026",
+    role: "Web development/design",
   },
 ];
