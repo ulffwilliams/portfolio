@@ -5,7 +5,6 @@ import Socials from "@/components/Socials";
 import SmoothWrapper from "@/components/SmoothWrapper";
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
-import Portrait from "@/components/Portrait";
 import ProjectsSection from "@/components/ProjectsSection";
 import ContactForm from "@/components/ContactForm";
 import { ProjectModalProvider } from "@/components/ProjectModalContext";
@@ -14,7 +13,13 @@ import RotatingWord from "@/components/RotatingWord";
 import Magnetic from "@/components/Magnetic";
 import ScrollReveal from "@/components/ScrollReveal";
 import IntroLoader from "@/components/IntroLoader";
-import { Color } from "three";
+import dynamic from "next/dynamic";
+import PortraitFallback from "@/components/PortraitFallback";
+
+const PortraitPlatform = dynamic(
+  () => import("@/components/PortraitPlatform"),
+  { ssr: false, loading: () => <PortraitFallback /> },
+);
 
 export default function Home() {
   const [toggle, setToggle] = useState(true);
@@ -158,7 +163,7 @@ export default function Home() {
             </h1>
 
             <div data-reveal className="grid md:grid-cols-2 gap-8 items-start">
-              <Portrait />
+              <PortraitPlatform />
 
               <article className="flex flex-col gap-6 w-full border-4 p-8 md:h-full md:justify-center">
                 <h2 className="text-2xl md:text-3xl">who I am</h2>
