@@ -24,7 +24,7 @@ Replace the flat portrait (`components/Portrait.tsx`, grayscale/color slider) in
   - Lights: `ambientLight` + one `directionalLight` from upper-front-left so tilted sides read as 3D.
 - `Slab` subcomponent:
   - `BoxGeometry(2, 2, 0.25)`.
-  - Material array (order +x, -x, +y, -y, +z, -z): sides and back `MeshStandardMaterial({ color: "#000" })`, front (+z) `MeshStandardMaterial({ map: texture })`.
+  - Material array (order +x, -x, +y, -y, +z, -z): sides and back `MeshStandardMaterial({ color: "#1a1a1a", roughness: 0.6 })` (near-black so lighting still shades the sides), front (+z) `MeshBasicMaterial({ map: texture, toneMapped: false })` so image colors stay exact and unaffected by lighting.
   - Texture loaded with `useLoader(THREE.TextureLoader, "/me.JPEG")`, `colorSpace = THREE.SRGBColorSpace`.
 - `Shadow` subcomponent:
   - Plane below/behind the slab with a radial-gradient `CanvasTexture` (black center → transparent edge), `transparent`, `depthWrite: false`.
@@ -34,7 +34,7 @@ Replace the flat portrait (`components/Portrait.tsx`, grayscale/color slider) in
 
 - **Pointer mode** (fine pointer available and a `pointermove` received within the last 3 s):
   - `window` `pointermove` listener stores normalized offset `(nx, ny)` relative to the canvas element's bounding-rect center, divided by half the viewport size, clamped to [-1, 1].
-  - Target rotation: `rotY = nx * MAX_TILT`, `rotX = -ny * MAX_TILT`, `MAX_TILT ≈ 15°` (0.26 rad).
+  - Target rotation: `rotY = nx * MAX_TILT`, `rotX = ny * MAX_TILT` (screen y grows downward; negative rotX turns the face up), `MAX_TILT ≈ 15°` (0.26 rad).
 - **Idle mode** (coarse pointer, or no pointer movement for 3 s):
   - Target rotation and position from sums of sines at incommensurate frequencies, e.g. `rotX = 0.12*sin(t*0.7) + 0.05*sin(t*1.3)`, `rotY = 0.15*sin(t*0.5+1) + 0.06*sin(t*1.1)` — non-repeating, organic drift.
 - **Always:** gentle Y bob `posY = 0.06*sin(t*1.2)`.
