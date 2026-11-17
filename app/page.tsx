@@ -227,6 +227,8 @@ export default function Home() {
                   <li>Cloud services like Cloudflare, Supabase etc</li>
                   <li>Vercel/Github-pages</li>
                   <li>Mailchimp integrations, Resend, Web3Forms</li>
+                  <li>Claude Code, Claude API, MCP</li>
+                  <li>AI workflows in GitHub Actions</li>
                 </ul>
               </article>
 

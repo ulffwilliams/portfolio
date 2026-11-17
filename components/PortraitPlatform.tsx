@@ -7,17 +7,30 @@ import {
   useState,
   type RefObject,
 } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader, type ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import PortraitFallback from "./PortraitFallback";
 
 const IMG = "/me.JPEG";
 const SLAB = 2;
-const DEPTH = 0.25;
+const DEPTH = 0.6;
+const SIDE = "#2b2b2b";
+const WALL_Z = -1; // invisible plane that catches the shadow
 const MAX_TILT = 0.26; // ~15deg
 const IDLE_AFTER_MS = 3000;
 const DAMP = 4;
 const STATIC_TILT = { rx: -0.1, ry: 0.18 };
+// Click bounce: underdamped spring (omega ~12, zeta ~0.37 -> visible overshoot).
+const SPRING_K = 150;
+const SPRING_C = 9;
+const PUSH_Z = 3; // impulse velocity backward
+const PUSH_TILT = 1.6; // impulse angular velocity per unit of off-center click
+
+type Spring = { x: number; v: number };
+const stepSpring = (sp: Spring, d: number) => {
+  sp.v += (-SPRING_K * sp.x - SPRING_C * sp.v) * d;
+  sp.x += sp.v * d;
+};
 
 type PointerState = { nx: number; ny: number; last: number };
 
@@ -33,23 +46,6 @@ function hasWebGL() {
   }
 }
 
-function useShadowTexture() {
-  const tex = useMemo(() => {
-    const size = 128;
-    const c = document.createElement("canvas");
-    c.width = c.height = size;
-    const g = c.getContext("2d")!;
-    // Draw the rect far off-canvas and let only its blurred shadow land in view.
-    g.shadowColor = "rgba(0,0,0,0.55)";
-    g.shadowBlur = 22;
-    g.shadowOffsetX = 1000;
-    g.fillRect(24 - 1000, 24, size - 48, size - 48);
-    return new THREE.CanvasTexture(c);
-  }, []);
-  useEffect(() => () => tex.dispose(), [tex]);
-  return tex;
-}
-
 function Slab({
   pointer,
   reduced,
@@ -58,8 +54,6 @@ function Slab({
   reduced: boolean;
 }) {
   const group = useRef<THREE.Group>(null);
-  const shadow = useRef<THREE.Mesh>(null);
-  const shadowMat = useRef<THREE.MeshBasicMaterial>(null);
   const loaded = useLoader(THREE.TextureLoader, IMG);
   // Own copy so we can configure it without mutating the cached loader result.
   const tex = useMemo(() => {
@@ -70,8 +64,29 @@ function Slab({
     return t;
   }, [loaded]);
   useEffect(() => () => tex.dispose(), [tex]);
-  const shadowTex = useShadowTexture();
-  const s = useRef({ rx: 0, ry: 0, y: 0 });
+  const s = useRef({ rx: 0, ry: 0, y: 0, z: 0 });
+  const bounce = useRef({
+    z: { x: 0, v: 0 },
+    rx: { x: 0, v: 0 },
+    ry: { x: 0, v: 0 },
+  });
+
+  const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
+    if (reduced) return;
+    e.stopPropagation();
+    // Click position in slab space, normalized to -1..1 from center.
+    const local = e.object.worldToLocal(e.point.clone());
+    const lx = clamp(local.x / (SLAB / 2), -1, 1);
+    const ly = clamp(local.y / (SLAB / 2), -1, 1);
+    const b = bounce.current;
+    b.z.v -= PUSH_Z;
+    b.rx.v += ly * PUSH_TILT; // press top -> top goes back
+    b.ry.v += lx * PUSH_TILT; // press right -> right edge goes back
+  };
+  const setCursor = (e: ThreeEvent<PointerEvent>, cursor: string) => {
+    if (e.nativeEvent.target instanceof HTMLElement)
+      e.nativeEvent.target.style.cursor = cursor;
+  };
 
   useFrame((state, dt) => {
     const g = group.current;
@@ -79,7 +94,7 @@ function Slab({
 
     if (reduced) {
       g.rotation.set(STATIC_TILT.rx, STATIC_TILT.ry, 0);
-      g.position.y = 0;
+      g.position.set(0, 0, 0);
       return;
     }
 
@@ -98,45 +113,45 @@ function Slab({
       tRy = 0.15 * Math.sin(t * 0.5 + 1) + 0.06 * Math.sin(t * 1.1);
     }
     const ty = 0.06 * Math.sin(t * 1.2);
+    // Drift toward/away from the wall so the shadow breathes (offset + softness).
+    const tz = 0.12 * Math.sin(t * 0.9 + 0.5);
 
     const c = s.current;
     c.rx = THREE.MathUtils.damp(c.rx, tRx, DAMP, d);
     c.ry = THREE.MathUtils.damp(c.ry, tRy, DAMP, d);
     c.y = THREE.MathUtils.damp(c.y, ty, DAMP, d);
+    c.z = THREE.MathUtils.damp(c.z, tz, DAMP, d);
 
-    g.rotation.set(c.rx, c.ry, 0);
-    g.position.y = c.y;
+    const b = bounce.current;
+    stepSpring(b.z, d);
+    stepSpring(b.rx, d);
+    stepSpring(b.ry, d);
 
-    // Higher float -> larger, fainter shadow.
-    if (shadow.current && shadowMat.current) {
-      const k = c.y / 0.06; // -1..1
-      shadow.current.scale.setScalar(1 + k * 0.05);
-      shadowMat.current.opacity = 0.75 - k * 0.15;
-    }
+    g.rotation.set(c.rx + b.rx.x, c.ry + b.ry.x, 0);
+    g.position.set(0, c.y, c.z + b.z.x);
   });
 
   return (
     <>
-      <mesh ref={shadow} position={[0.08, -0.18, -0.6]}>
-        <planeGeometry args={[SLAB * 1.6, SLAB * 1.6]} />
-        <meshBasicMaterial
-          ref={shadowMat}
-          map={shadowTex}
-          transparent
-          depthWrite={false}
-          toneMapped={false}
-        />
+      <mesh position={[0, 0, WALL_Z]} receiveShadow>
+        <planeGeometry args={[8, 8]} />
+        <shadowMaterial transparent opacity={0.28} />
       </mesh>
       <group ref={group}>
-        <mesh>
+        <mesh
+          castShadow
+          onPointerDown={onPointerDown}
+          onPointerOver={(e) => !reduced && setCursor(e, "pointer")}
+          onPointerOut={(e) => setCursor(e, "")}
+        >
           <boxGeometry args={[SLAB, SLAB, DEPTH]} />
           {/* order: +x, -x, +y, -y, +z (front), -z */}
-          <meshStandardMaterial attach="material-0" color="#1a1a1a" roughness={0.6} />
-          <meshStandardMaterial attach="material-1" color="#1a1a1a" roughness={0.6} />
-          <meshStandardMaterial attach="material-2" color="#1a1a1a" roughness={0.6} />
-          <meshStandardMaterial attach="material-3" color="#1a1a1a" roughness={0.6} />
+          <meshStandardMaterial attach="material-0" color={SIDE} roughness={0.8} />
+          <meshStandardMaterial attach="material-1" color={SIDE} roughness={0.8} />
+          <meshStandardMaterial attach="material-2" color={SIDE} roughness={0.8} />
+          <meshStandardMaterial attach="material-3" color={SIDE} roughness={0.8} />
           <meshBasicMaterial attach="material-4" map={tex} toneMapped={false} />
-          <meshStandardMaterial attach="material-5" color="#1a1a1a" roughness={0.6} />
+          <meshStandardMaterial attach="material-5" color={SIDE} roughness={0.8} />
         </mesh>
       </group>
     </>
@@ -192,11 +207,29 @@ export default function PortraitPlatform() {
       <Canvas
         dpr={[1, 2]}
         gl={{ alpha: true, antialias: true }}
-        camera={{ fov: 25, position: [0, 0, 6] }}
+        shadows={{ type: THREE.VSMShadowMap }}
+        camera={{ fov: 25, position: [0, 0, 6.5] }}
         frameloop={reduced ? "demand" : visible ? "always" : "never"}
       >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[-3, 4, 5]} intensity={1.6} />
+        <ambientLight intensity={0.5} />
+        {/* Key: near-frontal so the shadow falls slightly down-right on the wall. */}
+        <directionalLight
+          position={[-1.2, 1.8, 6]}
+          intensity={1.2}
+          castShadow
+          shadow-mapSize={[1024, 1024]}
+          shadow-radius={10}
+          shadow-blurSamples={16}
+          shadow-bias={-0.0005}
+          shadow-camera-left={-3}
+          shadow-camera-right={3}
+          shadow-camera-top={3}
+          shadow-camera-bottom={-3}
+          shadow-camera-near={0.1}
+          shadow-camera-far={20}
+        />
+        {/* Fill from upper-left: lights top/left sides, leaves bottom/right dark. */}
+        <directionalLight position={[-5, 6, 1]} intensity={2.2} />
         <Suspense fallback={null}>
           <Slab pointer={pointer} reduced={reduced} />
         </Suspense>

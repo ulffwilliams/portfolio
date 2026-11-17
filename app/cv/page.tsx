@@ -17,6 +17,10 @@ const SKILLS: { label: string; items: string }[] = [
     items: "Vercel, Cloudflare, GitHub, Git, GitHub Actions",
   },
   {
+    label: "AI",
+    items: "Claude Code, Claude API, MCP, AI workflows in GitHub Actions",
+  },
+  {
     label: "Other",
     items: "WordPress, Mailchimp, Resend, Web3Forms, Responsive, UI/UX",
   },
